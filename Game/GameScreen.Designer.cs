@@ -39,12 +39,6 @@
             this.gameTimer.Interval = 20;
             this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             // 
-            // dayNightCycle
-            // 
-            this.dayNightCycle.Enabled = true;
-            this.dayNightCycle.Interval = 20;
-            this.dayNightCycle.Tick += new System.EventHandler(this.dayNightCycle_Tick);
-            // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
