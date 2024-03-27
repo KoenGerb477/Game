@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -31,6 +33,8 @@ namespace Game
 
         public bool start = true;
 
+        Vector previousVelocity = new Vector(0, 0);
+
         public Player(int x, int y, Image image)
         {
             this.x = x;
@@ -44,6 +48,7 @@ namespace Game
         public void Move(List<Hill>hillSegments)
         {
             #region tangent calculations
+            //find hill segment under player
             Hill hillSegment = new Hill(0, 0, 0, false, new Point(0,0));
             foreach (Hill h in hillSegments)
             {
@@ -78,7 +83,6 @@ namespace Game
             middleOfPlayerGroundPoint = new PointF(x1, y1);
 
             float tangent = rise / run;
-            float perpTangent = -run / rise;
             #endregion
 
             #region angle calculations
@@ -90,22 +94,30 @@ namespace Game
             #region touching ground
             float groundHeight = middleOfPlayerGroundPoint.Y;
 
+            // if player is touching ground set bool to indicate that
             if (y + size >= groundHeight)
             {
                 touchingGround = true;
 
-                image = Properties.Resources._101;
+                image = Properties.Resources. _101;
+
             }
             else
             {
                 touchingGround = false;
-                image = Properties.Resources._144;
+            }
+
+            //if player is above the ground give it a flying image
+            if(y + size + 10 <= groundHeight)
+            {
+                image = Properties.Resources._30;// _144;
             }
             #endregion
 
             #region user inputs
             inputs = new Vector(0, 0);
 
+            //store the values given by up and down keys to later adjust the velocity of player
             if (upKey)
             {
                 inputs.y+=3;
@@ -114,22 +126,17 @@ namespace Game
             {
                 inputs.y-=3;
             }
+            //give boost at the start of game
             if(spaceKey && start)
             {
                 inputs.x = 20;
+
+                SoundPlayer buzzer = new SoundPlayer(Properties.Resources.extremely_loud_incorrect_buzzer_0cDaG20);
+                buzzer.Play();
+                Thread.Sleep(1000);
+
                 start = false;
             }
-            //if (leftKey)
-            //{
-            //    inputs.x--;
-            //}
-            //if (rightKey)
-            //{
-            //    if(velocity.x < 50)
-            //    {
-            //        inputs.x++;
-            //    }
-            //}
             #endregion
 
             #region gravity calculations
@@ -139,18 +146,25 @@ namespace Game
             Vector gravity = new Vector (gX,  -gY);
             #endregion
 
+            //normal force is used when touching ground
             if (touchingGround)
             {
                 #region normal calculations
+                //y component of normal force is equal to the y components of all forces going into the ground
                 float nY = -gravity.y - inputs.y - velocity.y;
-
+                
                 float nX;
+
+                //if ground is downhill
                 if (rise > 0)
                 {
+                    //calculate the horizantal component of normal force
                     nX = (nY + inputs.y) * (float)Math.Tan(angle);
                 }
+                //if ground is uphill
                 else
                 {
+                    //adjust and calculate x and y components of normal force
                     nY += velocity.x * (float)Math.Tan(angle);
                     nX = (nY + inputs.y) * (float)Math.Tan(angle);
                 }
@@ -164,52 +178,37 @@ namespace Game
                 normal = new Vector(0, 0);
             }
 
-            #region friction calculations
-            //Vector friction = new Vector(normal.y, -normal.x).Multiply(1f);
-            //if (velocity.x > 0)
-            //{
-            //    friction.x = -Math.Abs(velocity.x);
-            //}
-            //else
-            //{
-            //    friction.x = Math.Abs(velocity.x);
-            //}
-            Vector friction = new Vector (0, 0);
-            if (touchingGround)
-            {
-                if (velocity.x > 0)
-                {
-                    friction = new Vector(-velocity.x + 0.000001f, 0);
-                }
-                else if (velocity.x < 0)
-                {
-                    friction = new Vector(-velocity.x - 0.000001f, 0);
-                }
-            }
-            else
-            {
-                friction = new Vector(0, 0);
-            }
+            #region velocity calculations
+            //add all vectors together to find players velocity
+            velocity = velocity.Add(gravity).Add(normal).Add(inputs);
             #endregion
 
-            #region velocity calculations
-            velocity = velocity.Add(gravity).Add(normal).Add(inputs);//.Add(friction);
+            #region if speed skyrockets fix it
+            //if accelerates extremely fast for no reason set velocity to the previous velocity
+            if (velocity.x - previousVelocity.x > 75 || velocity.x + previousVelocity.x < -75)
+            {
+                velocity.x = previousVelocity.x;
+            }
+            previousVelocity = velocity;
+            #endregion
 
+            #region terminal velocity
+            //set max y speed
+            if (velocity.y > 50)
+            {
+                velocity.y = 50;
+            }
+            if (velocity.y < -50)
+            {
+                velocity.y = -50;
+            }
             #endregion
 
             #region movement
+            //move player vertically
             y -= velocity.y;
+            //horizantal movement is shown through moving hills to the left
             #endregion
-        }
-
-        public void Jump()
-        {
-            if (touchingGround)
-            {
-                velocity.y = 10;
-            }
-
-            touchingGround = false;
         }
     }
 }

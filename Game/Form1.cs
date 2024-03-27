@@ -12,14 +12,20 @@ namespace Game
 {
     public partial class Form1 : Form
     {
+        //score tracking global variable
+        public static int distanceTravelled = 0;
+
         public Form1()
         {
             InitializeComponent();
+            Cursor.Hide();
 
+            //open main screen
             ChangeScreen(this, new MainScreen());
-
         }
 
+
+        //method to change screens
         public static void ChangeScreen(object sender, UserControl next)
         {
             Form f; // will either be the sender or parent of sender
@@ -36,8 +42,7 @@ namespace Game
             }
 
             // add the new UserControl to the middle of the screen and focus on it
-            next.Location = new Point((f.ClientSize.Width - next.Width) / 2,
-                (f.ClientSize.Height - next.Height) / 2);
+            next.Location = new Point((f.ClientSize.Width - next.Width) / 2, (f.ClientSize.Height - next.Height) / 2);
             f.Controls.Add(next);
             next.Focus();
         }

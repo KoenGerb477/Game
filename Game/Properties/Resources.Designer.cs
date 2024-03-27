@@ -2129,5 +2129,23 @@ namespace Game.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream downer_noise {
+            get {
+                return ResourceManager.GetStream("downer_noise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream extremely_loud_incorrect_buzzer_0cDaG20 {
+            get {
+                return ResourceManager.GetStream("extremely_loud_incorrect_buzzer_0cDaG20", resourceCulture);
+            }
+        }
     }
 }

@@ -15,10 +15,14 @@ namespace Game
         public MainScreen()
         {
             InitializeComponent();
+
+            //center screen
+            this.Location = new Point(ClientSize.Width / 2 - this.Width / 2, ClientSize.Height / 2 - this.Height / 2);
         }
 
         private void startButton_Click(object sender, EventArgs e)
         {
+            //open gamescreen
             Form1.ChangeScreen(this, new GameScreen());
         }
     }

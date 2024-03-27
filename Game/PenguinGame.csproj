@@ -52,6 +52,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameEndScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GameEndScreen.Designer.cs">
+      <DependentUpon>GameEndScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="GameScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -71,6 +77,9 @@
     <Compile Include="Vector.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameEndScreen.resx">
+      <DependentUpon>GameEndScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GameScreen.resx">
       <DependentUpon>GameScreen.cs</DependentUpon>
@@ -721,6 +730,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\206.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Scooby Doo Laugh %28Rehehehe%29 Sound Effect [TubeRipper.com].wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Scooby Doo Laugh %28Rehehehe%29 Sound Effect [TubeRipper.com] %281%29.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\downer_noise.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\extremely-loud-incorrect-buzzer_0cDaG20.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\main-theme---bloons-td-5-made-with-Voicemod.mp3" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -30,8 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
-            this.troubleshoot1 = new System.Windows.Forms.Label();
-            this.troubleshoot2 = new System.Windows.Forms.Label();
+            this.dayNightCycle = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // gameTimer
@@ -40,46 +39,30 @@
             this.gameTimer.Interval = 20;
             this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             // 
-            // troubleshoot1
+            // dayNightCycle
             // 
-            this.troubleshoot1.AutoSize = true;
-            this.troubleshoot1.ForeColor = System.Drawing.Color.Black;
-            this.troubleshoot1.Location = new System.Drawing.Point(76, 47);
-            this.troubleshoot1.Name = "troubleshoot1";
-            this.troubleshoot1.Size = new System.Drawing.Size(51, 20);
-            this.troubleshoot1.TabIndex = 0;
-            this.troubleshoot1.Text = "label1";
-            // 
-            // troubleshoot2
-            // 
-            this.troubleshoot2.AutoSize = true;
-            this.troubleshoot2.Location = new System.Drawing.Point(216, 47);
-            this.troubleshoot2.Name = "troubleshoot2";
-            this.troubleshoot2.Size = new System.Drawing.Size(51, 20);
-            this.troubleshoot2.TabIndex = 1;
-            this.troubleshoot2.Text = "label2";
+            this.dayNightCycle.Enabled = true;
+            this.dayNightCycle.Interval = 20;
+            this.dayNightCycle.Tick += new System.EventHandler(this.dayNightCycle_Tick);
             // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.troubleshoot2);
-            this.Controls.Add(this.troubleshoot1);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.DoubleBuffered = true;
             this.Name = "GameScreen";
-            this.Size = new System.Drawing.Size(1800, 1100);
+            this.Size = new System.Drawing.Size(1800, 1150);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.GameScreen_Paint);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GameScreen_KeyUp);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.GameScreen_PreviewKeyDown);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Timer gameTimer;
-        private System.Windows.Forms.Label troubleshoot1;
-        private System.Windows.Forms.Label troubleshoot2;
+        private System.Windows.Forms.Timer dayNightCycle;
     }
 }
